@@ -1,18 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.hkfe.controle;
 
 import com.hkfe.dao.PessoaDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import com.hkfe.modelo.Pessoa;
+import com.hkfe.dao.PessoaDataModel;
+
+import org.primefaces.model.LazyDataModel;
 
 /**
  *
@@ -23,7 +24,10 @@ import com.hkfe.modelo.Pessoa;
 public class PessoaControle implements Serializable {
 
     private Pessoa pessoa = new Pessoa();
+
     private List<Pessoa> pessoas = new ArrayList<>();
+
+    private LazyDataModel<Pessoa> lazyModel;
 
     @PostConstruct
     public void init() {
@@ -31,8 +35,16 @@ public class PessoaControle implements Serializable {
     }
 
     public void listarPessoas() {
-        pessoas = new PessoaDAO().readPessoas();
-        limparPessoa();
+        try {
+            System.out.println("Antes");
+            pessoas = new PessoaDAO().readPessoas();
+            lazyModel = new PessoaDataModel();
+            System.out.println("Depois");
+            limparPessoa();
+        } catch (Exception e) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);
+        }
+
     }
 
     public void limparPessoa() {
@@ -67,18 +79,19 @@ public class PessoaControle implements Serializable {
         this.pessoa = pessoa;
     }
 
-    /**
-     * @return the pessoas
-     */
     public List<Pessoa> getPessoas() {
         return pessoas;
     }
 
-    /**
-     * @param pessoas the pessoas to set
-     */
     public void setPessoas(List<Pessoa> pessoas) {
         this.pessoas = pessoas;
     }
 
+    public LazyDataModel<Pessoa> getLazyModel() {
+        return lazyModel;
+    }
+
+    public void setLazyModel(LazyDataModel<Pessoa> lazyModel) {
+        this.lazyModel = lazyModel;
+    }
 }

@@ -81,15 +81,50 @@
           <p:dataTable
             id="listaPessoas"
             class="listaPessoas"
-            value="#{pessoaControle.pessoas}"
+            value="#{pessoaControle.lazyModel}"
             var="pessoa"
+            paginator="true"
+            rows="10"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+            rowsPerPageTemplate="5,10,15"
+            lazy="true"
           >
-            <p:column headerText="Nome"> #{pessoa.nome} </p:column>
-            <p:column headerText="Telefone"> #{pessoa.telefone} </p:column>
-            <p:column headerText="Cargo"> #{pessoa.cargo} </p:column>
-            <p:column headerText="Empresa"> #{pessoa.empresa} </p:column>
-            <p:column headerText="Criado em"> #{pessoa.criadoEm} </p:column>
-            <p:column headerText="Criado em">
+            <p:column
+              headerText="Nome"
+              sortBy="#{pessoa.nome}"
+              filterBy="#{pessoa.nome}"
+            >
+              <h:outputText value="#{pessoa.nome}" />
+            </p:column>
+            <p:column
+              headerText="Telefone"
+              sortBy="#{pessoa.telefone}"
+              filterBy="#{pessoa.telefone}"
+            >
+              <h:outputText value="#{pessoa.telefone}" />
+            </p:column>
+            <p:column
+              headerText="Cargo"
+              sortBy="#{pessoa.cargo}"
+              filterBy="#{pessoa.cargo}"
+            >
+              <h:outputText value="#{pessoa.cargo}" />
+            </p:column>
+            <p:column
+              headerText="Empresa"
+              sortBy="#{pessoa.empresa}"
+              filterBy="#{pessoa.empresa}"
+            >
+              <h:outputText value="#{pessoa.empresa}" />
+            </p:column>
+            <p:column
+              headerText="Criado em"
+              sortBy="#{pessoa.criadoEm}"
+              filterBy="#{pessoa.criadoEm}"
+            >
+              <h:outputText value="#{pessoa.criadoEm}" />
+            </p:column>
+            <p:column headerText="Ações">
               <center>
                 <p:commandButton value="Alterar" update="@none">
                   <f:setPropertyActionListener

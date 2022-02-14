@@ -20,7 +20,7 @@ import com.hkfe.modelo.Pessoa;
  */
 public class PessoaDAO {
 
-    private EntityManager getEntityManager() {
+    protected EntityManager getEntityManager() {
         EntityManagerFactory factory = null;
         EntityManager entityManager = null;
         try {
