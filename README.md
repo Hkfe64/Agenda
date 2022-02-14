@@ -25,6 +25,9 @@ cargo character varying(255) NULL <br/>
 ALTER TABLE <br/>
 public.pessoa <br/>
 ADD <br/>
-CONSTRAINT pessoa_pkey PRIMARY KEY (id);
+CONSTRAINT pessoa_pkey PRIMARY KEY (id); <br/>
+CREATE SEQUENCE pessoa_id_seq OWNED BY pessoa.id; <br/>
+ALTER TABLE public.pessoa  <br/>
+ALTER COLUMN id SET DEFAULT nextval('pessoa_id_seq'); <br/>
 
 É necessário editar usuário e senha do postgresql no persistence.xml
