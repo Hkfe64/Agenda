@@ -26,3 +26,5 @@ ALTER TABLE <br/>
 public.pessoa <br/>
 ADD <br/>
 CONSTRAINT pessoa_pkey PRIMARY KEY (id);
+
+É necessário editar usuário e senha do postgresql no persistence.xml
