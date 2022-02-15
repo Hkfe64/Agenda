@@ -82,6 +82,8 @@ public class PessoaDataModel extends LazyDataModel<Pessoa> {
             }
             if (!orders.isEmpty())
                 cr.orderBy(orders);
+            else
+                cr.orderBy(cb.asc(root.get("id")));
 
             Query query = entityManager.createQuery(cr);
             query.setMaxResults(pageSize);
@@ -89,10 +91,13 @@ public class PessoaDataModel extends LazyDataModel<Pessoa> {
             datasource = query.getResultList();
 
             // rowCount
-            this.setRowCount(
-                    Integer.parseInt(String
-                            .valueOf(entityManager.createQuery("SELECT count(id) FROM Pessoa p").getSingleResult())));
+            // this.setRowCount(
+            // Integer.parseInt(String
+            // .valueOf(entityManager.createQuery("SELECT count(id) FROM Pessoa
+            // p").getSingleResult())));
 
+            this.setRowCount(
+                    datasource.size() < pageSize ? datasource.size() : pageSize + first + 1);
             return datasource;
         } catch (Exception e) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);
