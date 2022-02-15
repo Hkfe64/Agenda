@@ -48,7 +48,6 @@ public class PessoaDataModel extends LazyDataModel<Pessoa> {
     public List<Pessoa> load(int first, int pageSize, Map<String, SortMeta> sortMeta,
             Map<String, FilterMeta> filterMeta) {
         try {
-            System.out.println("Iniciando Lazy");
             EntityManager entityManager = new PessoaDAO().getEntityManager();
 
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -70,7 +69,6 @@ public class PessoaDataModel extends LazyDataModel<Pessoa> {
                     Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);
                 }
             }
-            System.out.println("Predicates " + predicates.toString());
             if (!predicates.isEmpty())
                 cr.where(predicates.toArray(new Predicate[] {}));
 
@@ -82,15 +80,12 @@ public class PessoaDataModel extends LazyDataModel<Pessoa> {
                             : cb.desc(root.get(meta.getSortField())));
                 }
             }
-            System.out.println("Orders " + orders.toString());
             if (!orders.isEmpty())
                 cr.orderBy(orders);
 
             Query query = entityManager.createQuery(cr);
             query.setMaxResults(pageSize);
-            System.out.println("pageSize " + pageSize);
             query.setFirstResult(first);
-            System.out.println("first " + first);
             datasource = query.getResultList();
 
             // rowCount
@@ -98,7 +93,6 @@ public class PessoaDataModel extends LazyDataModel<Pessoa> {
                     Integer.parseInt(String
                             .valueOf(entityManager.createQuery("SELECT count(id) FROM Pessoa p").getSingleResult())));
 
-            System.out.println("Datasource " + datasource);
             return datasource;
         } catch (Exception e) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);

@@ -2,8 +2,6 @@ package com.hkfe.controle;
 
 import com.hkfe.dao.PessoaDAO;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,8 +23,6 @@ public class PessoaControle implements Serializable {
 
     private Pessoa pessoa = new Pessoa();
 
-    private List<Pessoa> pessoas = new ArrayList<>();
-
     private LazyDataModel<Pessoa> lazyModel;
 
     @PostConstruct
@@ -36,10 +32,7 @@ public class PessoaControle implements Serializable {
 
     public void listarPessoas() {
         try {
-            System.out.println("Antes");
-            pessoas = new PessoaDAO().readPessoas();
             lazyModel = new PessoaDataModel();
-            System.out.println("Depois");
             limparPessoa();
         } catch (Exception e) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, e);
@@ -77,14 +70,6 @@ public class PessoaControle implements Serializable {
      */
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
-    }
-
-    public List<Pessoa> getPessoas() {
-        return pessoas;
-    }
-
-    public void setPessoas(List<Pessoa> pessoas) {
-        this.pessoas = pessoas;
     }
 
     public LazyDataModel<Pessoa> getLazyModel() {
